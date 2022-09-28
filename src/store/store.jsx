@@ -1,6 +1,4 @@
-// import { connect } from 'react-redux';
-import { legacy_createStore } from 'redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, legacy_createStore } from 'redux';
 
 const initialState = {
   isCreated: false,
@@ -10,29 +8,51 @@ const initialState = {
   numbers: [],
 };
 
-function setMatrixReducer(state = initialState, action) {
+const setMatrixReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'CHANGE_ROWS':
       return (state = { ...state, rows: action.payload });
+
     case 'CHANGE_COLUMNS':
       return (state = { ...state, columns: action.payload });
+
     case 'CHANGE_CELLS':
       return (state = { ...state, cells: action.payload });
+
     case 'CREATE_MATRIX':
       return (state = { ...state, isCreated: action.payload });
+
     case 'REMOVE_ROW':
       return (state = {
         ...state,
         numbers: state.numbers.filter((row, id) => id != action.payload),
       });
+
+    case 'ADD_ROW':
+      return {
+        ...state,
+        numbers: [...state.numbers, action.payload],
+      };
+
+    case 'REMOVE_HIGHLIGHT':
+      return (state = {
+        ...state,
+        numbers: [...state.numbers],
+      });
+
+    case 'HIGHLIGHT_CELLS':
+      return (state = {
+        ...state,
+        numbers: [...state.numbers],
+      });
+
     case 'INCREASE_VALUE':
       return {
         ...state,
         numbers: state.numbers.map((item) => {
           item.map((el) => {
-            console.log(action.payload);
-            if (el.value === action.payload && el.id) {
-              el.value = action.payload + 1;
+            if (el.id === action.payload) {
+              el.value = action.value + 1;
               return el;
             } else {
               state.numbers.concat(el);
@@ -41,25 +61,11 @@ function setMatrixReducer(state = initialState, action) {
           return item;
         }),
       };
-    case 'HIGHLIGHT_CELLS':
-      return (state = {
-        ...state,
-        numbers: [...state.numbers],
-      });
-    case 'ADD_ROW':
-      return {
-        ...state,
-        numbers: [...state.numbers, action.payload],
-      };
-    case 'REMOVE_HIGHLIGHT':
-      return (state = {
-        ...state,
-        numbers: [...state.numbers],
-      });
+
     default:
       return state;
   }
-}
+};
 
 const store = legacy_createStore(setMatrixReducer);
 
@@ -85,9 +91,10 @@ const removeRow = (rowId) => ({
   payload: rowId,
 });
 
-const increaseValue = (obj) => ({
+const increaseValue = (index, value) => ({
   type: 'INCREASE_VALUE',
-  payload: obj.value,
+  payload: index,
+  value: value,
 });
 
 const highLightCells = (arr) => ({

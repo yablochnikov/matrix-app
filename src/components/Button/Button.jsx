@@ -9,6 +9,10 @@ const Button = () => {
   const rows = useSelector((state) => state.rows);
   const columns = useSelector((state) => state.columns);
   const numbers = useSelector((state) => state.numbers);
+  const cells = useSelector((state) => state.cells);
+
+  const condition = rows > 0 && columns > 0 && cells > 0 ? false : true;
+
   const fillState = (rows) => {
     for (let i = 0; i < rows; i++) {
       numbers[i] = [];
@@ -24,14 +28,16 @@ const Button = () => {
 
   return (
     <button
+      disabled={condition}
       type="button"
       className="button"
       onClick={() => {
         fillState(rows);
         actionCreators.createMatrix();
       }}
+      style={{}}
     >
-      CREATE
+      {condition ? 'Choose params please' : 'Create Matrix'}
     </button>
   );
 };

@@ -14,8 +14,11 @@ const Table = () => {
   const columns = useSelector((state) => state.columns);
   const isCreated = useSelector((state) => state.isCreated);
 
-  const getClosest = (amount, howMuchHighLight) => {
+  const getClosest = (element, howMuchHighLight) => {
     const newArr = [];
+
+    const amount = Number(element.target.textContent);
+
     numbers.forEach((row) => {
       row.map((cell) => {
         newArr.push(cell.value);
@@ -25,8 +28,10 @@ const Table = () => {
     let nearest;
 
     for (let i = 0; i < howMuchHighLight + 1; i++) {
-      nearest = newArr.reduce((prev, curr) => {
-        return Math.abs(curr - amount) < Math.abs(prev - amount) ? curr : prev;
+      nearest = newArr.reduce((prevNum, num) => {
+        return Math.abs(num - amount) < Math.abs(prevNum - amount)
+          ? num
+          : prevNum;
       });
 
       const s = newArr.findIndex((el) => el === nearest);
@@ -40,7 +45,6 @@ const Table = () => {
         });
       });
     }
-
     return numbers;
   };
 
@@ -52,13 +56,13 @@ const Table = () => {
     });
     return numbers;
   };
-  console.log(numbers);
 
   return (
     <div className="table">
       {isCreated ? (
         <>
           <button
+            className="button-addRow"
             onClick={() => {
               const row = [];
               for (let i = 0; i < columns; i++) {
@@ -73,7 +77,7 @@ const Table = () => {
           >
             Add row
           </button>
-          <div className="table-row">
+          <div className="table-row table-row-average">
             <span className="table-cell-info">№</span>
             {numbers[0].map((row, id) => {
               return (
@@ -89,7 +93,7 @@ const Table = () => {
               <>
                 <div className="table-row">
                   <span className="table-cell-info">{index + 1}</span>
-                  {row.map((cell, i) => {
+                  {row.map((cell) => {
                     return (
                       <div
                         key={cell.id}
@@ -99,15 +103,16 @@ const Table = () => {
                             : 'table-cell'
                         }
                         onClick={() => {
-                          actionCreators.increaseValue(numbers[index][i]);
+                          actionCreators.increaseValue(cell.id, cell.value);
                         }}
-                        onMouseEnter={(e) => {
+                        onMouseEnter={(element) => {
                           actionCreators.highLightCells(
-                            getClosest(Number(e.target.textContent), cells),
+                            getClosest(element, cells),
                           );
                         }}
-                        onMouseLeave={() => {
+                        onMouseLeave={(e) => {
                           actionCreators.removeHighLight(removeHighLight());
+                          e.target.removeAttribute('style');
                         }}
                       >
                         {cell.value}{' '}
@@ -119,21 +124,22 @@ const Table = () => {
                     {row.reduce((acc, cell) => {
                       return acc + cell.value;
                     }, 0)}
-                    <button
-                      type="button"
-                      onClick={() => {
-                        actionCreators.removeRow(index);
-                      }}
-                    >
-                      {' '}
-                      x
-                    </button>
                   </span>
+                  <button
+                    className="table-cell-remove"
+                    type="button"
+                    onClick={() => {
+                      actionCreators.removeRow(index);
+                    }}
+                  >
+                    {' '}
+                    x
+                  </button>
                 </div>
               </>
             );
           })}
-          <div className="table-row">
+          <div className="table-row table-row-average">
             <span className="table-cell-info">Avg</span>
             <AverageView numbers={numbers} />
             <span className="table-cell average">
@@ -141,9 +147,7 @@ const Table = () => {
             </span>
           </div>
         </>
-      ) : (
-        <div>no data</div>
-      )}
+      ) : null}
     </div>
   );
 };
