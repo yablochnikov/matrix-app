@@ -1,0 +1,49 @@
+.table {
+  margin: 0 auto;
+  margin-top: 50px;
+  &-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &-info {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  &-cell {
+    margin: 5px;
+    padding: 5px;
+    width: 50px;
+    height: 35px;
+    background-color: #60dbfb;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &-info {
+      margin: 5px;
+      padding: 5px;
+      width: 50px;
+      height: 35px;
+      background-color: #60dbfb;
+      background: #fff;
+      font-weight: 800;
+      color: black;
+    }
+  }
+  .average {
+    background-color: #1aa59f;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+  }
+}
+
+.delete-row {
+  display: none;
+}
+
+.highlighted {
+  background-color: #F5F827;
+}

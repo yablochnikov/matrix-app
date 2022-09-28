@@ -1,9 +1,8 @@
-import { actionCreators } from '../../App/App';
+import { actionCreators } from '../../store/store';
 import Button from '../Button/Button';
 
 import './Form.scss';
-function Form(props) {
-  console.log(props);
+function Form() {
   return (
     <form className="form" action="#">
       <div className="form-select">
@@ -13,7 +12,7 @@ function Form(props) {
           name="columns"
           type="number"
           min="0"
-          onChange={(e) => actionCreators.updateColumns(e.target.value)}
+          onChange={(e) => actionCreators.updateColumns(Number(e.target.value))}
         />
       </div>
       <br />
@@ -21,7 +20,7 @@ function Form(props) {
       <div className="form-select">
         <label htmlFor="columns">Enter the number of rows :</label>
         <input
-          onChange={(e) => actionCreators.updateRows(e.target.value)}
+          onChange={(e) => actionCreators.updateRows(Number(e.target.value))}
           className="form-input"
           name="columns"
           id="columns"
@@ -38,11 +37,11 @@ function Form(props) {
           name="columns"
           type="number"
           min="0"
-          onChange={(e) => actionCreators.updateCells(e.target.value)}
+          onChange={(e) => actionCreators.updateCells(Number(e.target.value))}
         />
       </div>
 
-      <Button />
+      <Button text={'Create'} />
     </form>
   );
 }
