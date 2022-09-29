@@ -5,7 +5,7 @@ import Button from '../Button/Button';
 
 import './Form.scss';
 const Form = () => {
-  const isCreated = useSelector((state) => state.isCreated);
+  const isCreated = useSelector((state) => state.setMatrix.isCreated);
 
   return (
     <>

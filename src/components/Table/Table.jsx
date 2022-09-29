@@ -9,14 +9,13 @@ import SumAverageView from './SumView';
 import './Table.scss';
 
 const Table = () => {
-  const numbers = useSelector((state) => state.numbers);
-  const cells = useSelector((state) => state.cells);
-  const columns = useSelector((state) => state.columns);
-  const isCreated = useSelector((state) => state.isCreated);
+  const numbers = useSelector((state) => state.changeMatrix.numbers);
+  const cells = useSelector((state) => state.setMatrix.cells);
+  const columns = useSelector((state) => state.setMatrix.columns);
+  const isCreated = useSelector((state) => state.setMatrix.isCreated);
 
   const getClosest = (element, howMuchHighLight) => {
     const newArr = [];
-
     const amount = Number(element.target.textContent);
 
     numbers.forEach((row) => {
@@ -114,18 +113,46 @@ const Table = () => {
                           actionCreators.removeHighLight(removeHighLight());
                           e.target.removeAttribute('style');
                         }}
+                        style={
+                          (cell.value /
+                            row.reduce((acc, cell) => {
+                              return acc + cell.value;
+                            }, 0)) *
+                            100 ===
+                          cell.percents
+                            ? {
+                                background: `linear-gradient(0deg, rgba(255,0,0,1) ${cell.percents}%, rgba(255,255,255,1)${cell.percents}%)`,
+                              }
+                            : null
+                        }
                       >
-                        {cell.value}{' '}
+                        {(cell.value /
+                          row.reduce((acc, cell) => {
+                            return acc + cell.value;
+                          }, 0)) *
+                          100 ===
+                        cell.percents
+                          ? Math.floor(cell.percents) + '%'
+                          : cell.value}{' '}
                       </div>
                     );
                   })}
 
-                  <span className="table-cell average">
+                  <span
+                    className="table-cell average"
+                    onMouseOver={(e) => {
+                      actionCreators.setPercents(Number(e.target.textContent));
+                    }}
+                    onMouseLeave={() => {
+                      actionCreators.clearPercents();
+                    }}
+                  >
                     {row.reduce((acc, cell) => {
                       return acc + cell.value;
                     }, 0)}
                   </span>
                   <button
+                    key={uuidv4()}
                     className="table-cell-remove"
                     type="button"
                     onClick={() => {

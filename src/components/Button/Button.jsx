@@ -6,10 +6,10 @@ import { actionCreators } from '../../store/store';
 import './Button.scss';
 
 const Button = () => {
-  const rows = useSelector((state) => state.rows);
-  const columns = useSelector((state) => state.columns);
-  const numbers = useSelector((state) => state.numbers);
-  const cells = useSelector((state) => state.cells);
+  const rows = useSelector((state) => state.setMatrix.rows);
+  const columns = useSelector((state) => state.setMatrix.columns);
+  const numbers = useSelector((state) => state.changeMatrix.numbers);
+  const cells = useSelector((state) => state.setMatrix.cells);
 
   const condition = rows > 0 && columns > 0 && cells > 0 ? false : true;
 
