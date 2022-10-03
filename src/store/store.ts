@@ -19,3 +19,5 @@ export const actionCreators = bindActionCreators(
   },
   store.dispatch,
 );
+
+export type RootState = ReturnType<typeof rootReducer>;

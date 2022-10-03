@@ -8,10 +8,14 @@
     "process": "readonly",
     "global": true
   },
+  "root": true,
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -20,9 +24,10 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "simple-import-sort"],
+  "plugins": ["react", "simple-import-sort", "@typescript-eslint"],
   "rules": {
     "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error"
   },

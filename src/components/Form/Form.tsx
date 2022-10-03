@@ -1,11 +1,12 @@
-import { useSelector } from 'react-redux';
+import React from 'react';
 
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { actionCreators } from '../../store/store';
 import Button from '../Button/Button';
 
 import './Form.scss';
-const Form = () => {
-  const isCreated = useSelector((state) => state.setMatrix.isCreated);
+const Form: React.FC = () => {
+  const { isCreated } = useTypedSelector((state) => state.setMatrix);
 
   return (
     <>
@@ -53,7 +54,7 @@ const Form = () => {
             />
           </div>
 
-          <Button text={'Create'} />
+          <Button />
         </form>
       ) : (
         <h2 className="form-subheader">Enjoy</h2>

@@ -5,7 +5,7 @@ import Table from '../components/Table/Table';
 
 import './App.scss';
 
-function App() {
+const App = () => {
   return (
     <div className="app">
       <div className="app-banner">
@@ -15,6 +15,6 @@ function App() {
       <Table />
     </div>
   );
-}
+};
 
 export default App;

@@ -1,19 +1,23 @@
 .table {
   margin: 0 auto;
   margin-top: 50px;
+
   &-row {
     display: flex;
     align-items: center;
     justify-content: center;
+
     &-average {
       margin-right: 47px;
     }
+
     &-info {
       display: flex;
       align-items: center;
       justify-content: center;
     }
   }
+
   &-cell {
     margin: 5px;
     padding: 5px;
@@ -26,7 +30,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-  
+
     &:hover {
       color: #fff;
       background-color: #f87a63;
@@ -39,6 +43,7 @@
       width: 50px;
       height: 35px;
     }
+
     &-info {
       margin: 5px;
       padding: 5px;
@@ -54,6 +59,7 @@
       justify-content: center;
     }
   }
+
   .average,
   .sum {
     background-color: #1aa59f;
