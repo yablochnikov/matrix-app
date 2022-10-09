@@ -6,13 +6,14 @@ type AverageViewProps = {
 
 const AverageView: React.FC<AverageViewProps> = ({ numbers }) => {
   const arr: number[][] = [];
-  console.log(arr);
+
   for (let i = 0; i < numbers.length; i++) {
     arr[i] = [];
     for (let j = 0; j < numbers[i].length; j++) {
       arr[i].push(numbers[i][j].value);
     }
   }
+
   return (
     <>
       {arr

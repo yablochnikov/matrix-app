@@ -1,3 +1,5 @@
+import React from 'react';
+
 const SumAverageView = ({ numbers }: { numbers: { value: number }[][] }) => {
   const arr: number[] = [];
   numbers.map((el: { value: number }[]) => {
@@ -10,4 +12,4 @@ const SumAverageView = ({ numbers }: { numbers: { value: number }[][] }) => {
   );
 };
 
-export default SumAverageView;
+export default React.memo(SumAverageView);
