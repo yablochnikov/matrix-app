@@ -1,0 +1,39 @@
+.app {
+  text-align: center;
+  &-banner {
+    margin: 0 auto;
+    background-color: #1aa59f;
+    width: 700px;
+    height: 300px;
+    padding: 25px;
+    &-heading {
+      font-weight: bold;
+      color: #f5f827;
+    }
+  }
+}
+
+.matrix {
+  margin-top: 25px;
+
+  &-table {
+    margin: 0 auto;
+  }
+  &-row {
+    padding: 5px;
+    width: 45px;
+    height: 20px;
+    font-size: 20px;
+    font-weight: 800;
+    background-color: #60dbfb;
+    border-radius: 10%;
+
+    &-info {
+      padding: 5px;
+      width: 45px;
+      height: 20px;
+      font-size: 20px;
+      font-weight: 800;
+    }
+  }
+}
