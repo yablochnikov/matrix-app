@@ -1,8 +1,5 @@
-import {
-  ISetMatrixState,
-  SetMatrixAction,
-  SetMatrixActionTypes,
-} from '../types/setMatrix';
+import { SetMatrixAction, SetMatrixActionTypes } from '../store/actionTypes';
+import { ISetMatrixState } from '../types/setMatrix';
 
 const initialState: ISetMatrixState = {
   isCreated: false,

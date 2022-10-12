@@ -1,21 +1,31 @@
+@use '../../variables/_colors.scss' as colors;
+@use '../../variables/_fonts.scss' as fonts;
+
+@import '../../mixins/_mixins.scss';
 .form {
   margin: 0 auto;
   width: 300px;
-  color: #fff;
-  &-input {
+  color: colors.$main-text-color;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__input {
     display: block;
     width: 35px;
-    margin-left: 15px;
   }
-  &-select {
-    color: #fff;
-    font-size: 16px;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+  &__select {
+    margin-top: 10px;
+    color: colors.$main-text-color;
+    font-size: fonts.$medium-font;
+    font-weight: 800;
+    @include flexSpaceBetween;
   }
-  &-subheader {
-    color: #fff;
+
+  &__subheader {
+    color: colors.$main-text-color;
   }
 }

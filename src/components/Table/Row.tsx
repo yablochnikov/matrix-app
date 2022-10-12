@@ -1,42 +1,71 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import { getClosest, removeHighLight } from '../../helpers/helpers';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { actionCreators } from '../../store/store';
-interface RowProps {
+
+type RowProps = {
   row: {
     value: number;
     id: string;
     isHighLighted: boolean;
-    percents?: number | undefined;
+    percents?: number;
   }[];
 
   cell: {
     value: number;
     id: string;
     isHighLighted: boolean;
-    percents?: number | undefined;
+    percents?: number;
   };
-}
+};
+
 const Row: FC<RowProps> = ({ row, cell }) => {
   const { numbers } = useTypedSelector((state) => state.changeMatrix);
   const { cells } = useTypedSelector((state) => state.setMatrix);
 
+  const handleClick = (value: number, id: string) => {
+    actionCreators.increaseValue(value, id);
+  };
+
+  const handleEnter = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    cells: number,
+    numbers: {
+      value: number;
+      id: string;
+      isHighLighted: boolean;
+      percents?: number | undefined;
+    }[][],
+  ) => {
+    actionCreators.highLightCells(getClosest(event, cells, { numbers }));
+  };
+
+  const handleLeave = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    numbers: {
+      value: number;
+      id: string;
+      isHighLighted: boolean;
+      percents?: number | undefined;
+    }[][],
+  ) => {
+    actionCreators.removeHighLight(removeHighLight({ numbers }));
+    (event.target as HTMLElement).removeAttribute('style');
+  };
+
   return (
     <div
       key={cell.id}
-      className={
-        cell.isHighLighted === true ? 'table-cell highlighted' : 'table-cell'
-      }
+      className={cell.isHighLighted ? 'cell cell__highlighted' : 'cell'}
       onClick={() => {
-        actionCreators.increaseValue(cell.value, cell.id);
+        handleClick(cell.value, cell.id);
       }}
-      onMouseEnter={(element) => {
-        actionCreators.highLightCells(getClosest(element, cells, { numbers }));
+      onMouseEnter={(event) => {
+        handleEnter(event, cells, numbers);
       }}
-      onMouseLeave={(e) => {
-        actionCreators.removeHighLight(removeHighLight({ numbers }));
-        (e.target as HTMLElement).removeAttribute('style');
+      onMouseLeave={(event) => {
+        handleLeave(event, numbers);
       }}
       style={
         (cell.value /

@@ -1,16 +1,25 @@
+@use '../variables/_colors.scss' as colors;
+@use '../variables/_fonts.scss' as fonts;
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .app {
   text-align: center;
 
-  &-banner {
+  &__banner {
     margin: 0 auto;
-    background-color: #1aa59f;
-    width: 700px;
-    padding: 25px;
+    background-color: colors.$main-background-color;
+    width: 100%;
+    padding-top: 25px;
+    padding-bottom: 25px;
 
-    &-heading {
-      font-weight: bold;
-      color: #f5f827;
-      font-size: 45px;
+    &_heading {
+      font-weight: 800;
+      color: colors.$additional-color;
+      font-size: fonts.$large-font;
     }
   }
 }

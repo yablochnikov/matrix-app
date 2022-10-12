@@ -1,40 +1,36 @@
-import uniqid from 'uniqid';
+import { FC } from 'react';
 
-import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { fillState } from '../../helpers/helpers';
 import { actionCreators } from '../../store/store';
 
 import './Button.scss';
 
-const Button = () => {
-  const { rows, columns, cells } = useTypedSelector((state) => state.setMatrix);
-  const { numbers } = useTypedSelector((state) => state.changeMatrix);
+type ButtonProps = {
+  isDisabled: boolean;
+  rows: number;
+  columns: number;
+  numbers: {
+    value: number;
+    id: string;
+    isHighLighted: boolean;
+    percents?: number | undefined;
+  }[][];
+};
 
-  const condition = rows > 0 && columns > 0 && cells > 0 ? false : true;
-
-  const fillState = (): void => {
-    for (let i = 0; i < rows; i++) {
-      numbers[i] = [];
-      for (let j = 0; j < columns; j++) {
-        numbers[i][j] = {
-          value: Math.round(Math.random() * (999 - 100) + 100),
-          isHighLighted: false,
-          id: uniqid(),
-        };
-      }
-    }
+const Button: FC<ButtonProps> = ({ isDisabled, rows, columns, numbers }) => {
+  const handleClick = () => {
+    actionCreators.fillMatrix(fillState({ numbers }, rows, columns));
+    actionCreators.createMatrix();
   };
 
   return (
     <button
-      disabled={condition}
+      disabled={isDisabled}
       type="button"
       className="button"
-      onClick={() => {
-        fillState();
-        actionCreators.createMatrix();
-      }}
+      onClick={() => handleClick()}
     >
-      {condition ? 'Choose params please' : 'Create Matrix'}
+      {isDisabled ? 'Choose params please' : 'Create Matrix'}
     </button>
   );
 };

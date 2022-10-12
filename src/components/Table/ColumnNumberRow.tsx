@@ -1,26 +1,27 @@
-import React from 'react';
+import { FC } from 'react';
 import uniqid from 'uniqid';
 
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 
-const ColumnNumberRow = () => {
+const ColumnNumberRow: FC = () => {
   const { numbers } = useTypedSelector((state) => state.changeMatrix);
+
   return (
-    <div className="table-row table-row-average">
-      <span className="table-cell-info">№</span>
+    <div className="table__row table__row_average">
+      <span className="cell__info">№</span>
       {numbers[0].map(
         (
           _row: { value: number; id: string; isHighLighted: boolean },
           id: number,
         ) => {
           return (
-            <span key={uniqid()} className="table-cell-info">
-              {id + 1}{' '}
+            <span key={uniqid()} className="cell__info">
+              {id + 1}
             </span>
           );
         },
       )}
-      <span className="table-cell-info">Sum</span>
+      <span className="cell__info">Sum</span>
     </div>
   );
 };

@@ -1,8 +1,10 @@
+import { IChangeMatrixState } from '../types/changeMatrix';
+import { CellType } from '../types/commonTypes';
+
 import {
   ChangeMatrixAction,
   ChangeMatrixActionTypes,
-  IChangeMatrixState,
-} from '../types/changeMatrix';
+} from './../store/actionTypes';
 
 const initialState: IChangeMatrixState = {
   numbers: [],
@@ -16,7 +18,7 @@ export const changeMatrixReducer = (
     case ChangeMatrixActionTypes.REMOVE_ROW:
       return (state = {
         ...state,
-        numbers: state.numbers.filter((row, id) => id != action.payload),
+        numbers: state.numbers.filter((_row, id) => id != action.payload),
       });
 
     case ChangeMatrixActionTypes.ADD_ROW:
@@ -28,35 +30,27 @@ export const changeMatrixReducer = (
     case ChangeMatrixActionTypes.REMOVE_HIGHLIGHT:
       return (state = {
         ...state,
-        numbers: [...state.numbers],
+        numbers: [...action.payload],
       });
 
     case ChangeMatrixActionTypes.HIGHLIGHT_CELLS:
       return (state = {
         ...state,
-        numbers: [...state.numbers],
+        numbers: [...action.payload],
       });
 
     case ChangeMatrixActionTypes.INCREASE_VALUE:
       return {
         ...state,
         numbers: state.numbers.map((item) => {
-          item.map(
-            (el: {
-              value: number;
-              id: string;
-              isHighLighted: boolean;
-              percents?: number;
-            }) => {
-              if (el.id === action.payload) {
-                console.log(el.id);
-                el.value = action.value + 1;
-                return el;
-              } else {
-                [...state.numbers, el];
-              }
-            },
-          );
+          item.map((cell: CellType) => {
+            if (cell.id === action.payload) {
+              cell.value = action.value + 1;
+              return cell;
+            } else {
+              [...state.numbers, cell];
+            }
+          });
 
           return item;
         }),
@@ -83,6 +77,9 @@ export const changeMatrixReducer = (
           });
         }),
       };
+
+    case ChangeMatrixActionTypes.FILL_MATRIX:
+      return { ...state, numbers: [...state.numbers] };
     default:
       return state;
   }

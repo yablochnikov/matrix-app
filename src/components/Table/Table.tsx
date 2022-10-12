@@ -1,21 +1,29 @@
-import React from 'react';
+import { FC, memo } from 'react';
 import uniqid from 'uniqid';
 
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { actionCreators } from '../../store/store';
+import { RowType } from '../../types/commonTypes';
 
-import AddRowButton from './AddRowButton';
-import AverageView from './AverageView';
-import ColumnNumberRow from './ColumnNumberRow';
-import Row from './Row';
-import SumColumn from './SumColumn';
-import SumAverageView from './SumView';
+import {
+  AddRowButton,
+  AverageView,
+  ColumnNumberRow,
+  Row,
+  SumAverageView,
+  SumColumn,
+} from './TableElements';
 
 import './Table.scss';
+import './Cell.scss';
 
-const Table: React.FC = () => {
+const Table: FC = () => {
   const { numbers } = useTypedSelector((state) => state.changeMatrix);
   const { isCreated } = useTypedSelector((state) => state.setMatrix);
+
+  const handleClick = (index: number) => {
+    actionCreators.removeRow(index);
+  };
 
   return (
     <div className="table">
@@ -23,46 +31,35 @@ const Table: React.FC = () => {
         <>
           <AddRowButton />
           <ColumnNumberRow />
-          {numbers.map(
-            (
-              row: {
-                value: number;
-                id: string;
-                isHighLighted: boolean;
-                percents?: number;
-              }[],
-              index: number,
-            ) => {
-              return (
-                <>
-                  <div className="table-row">
-                    <span key={uniqid()} className="table-cell-info">
-                      {index + 1}
-                    </span>
-                    {row.map((cell, i) => {
-                      return <Row cell={cell} row={row} key={i} />;
-                    })}
-                    <SumColumn row={row} />
-                    <button
-                      key={uniqid()}
-                      className="table-cell-remove"
-                      type="button"
-                      onClick={() => {
-                        actionCreators.removeRow(index);
-                      }}
-                    >
-                      {' '}
-                      x
-                    </button>
-                  </div>
-                </>
-              );
-            },
-          )}
-          <div className="table-row table-row-average">
-            <span className="table-cell-info">Avg</span>
+          {numbers.map((row: RowType, index: number) => {
+            return (
+              <>
+                <div className="table__row">
+                  <span key={uniqid()} className="cell__info">
+                    {index + 1}
+                  </span>
+                  {row.map((cell) => {
+                    return <Row cell={cell} row={row} key={cell.id} />; // ?????
+                  })}
+                  <SumColumn row={row} />
+                  <button
+                    key={uniqid()}
+                    className="cell__remove"
+                    type="button"
+                    onClick={() => {
+                      handleClick(index);
+                    }}
+                  >
+                    x
+                  </button>
+                </div>
+              </>
+            );
+          })}
+          <div className="table__row table__row_average">
+            <span className="cell__info">Avg</span>
             <AverageView numbers={numbers} />
-            <span className="table-cell average">
+            <span className="cell__sum">
               <SumAverageView numbers={numbers} />
             </span>
           </div>
@@ -72,4 +69,4 @@ const Table: React.FC = () => {
   );
 };
 
-export default React.memo(Table);
+export default memo(Table);

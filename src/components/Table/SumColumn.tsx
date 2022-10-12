@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
+import uniqid from 'uniqid';
 
 import { actionCreators } from '../../store/store';
 
@@ -14,7 +15,7 @@ interface SumColumnProps {
 const SumColumn: FC<SumColumnProps> = ({ row }) => {
   return (
     <span
-      className="table-cell average"
+      className="cell cell__sum"
       onMouseOver={(e) => {
         actionCreators.setPercents(
           Number((e.target as HTMLElement).textContent),

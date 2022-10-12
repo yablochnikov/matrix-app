@@ -1,92 +1,21 @@
+@use '../../variables/_colors.scss' as colors;
+@use '../../variables/_fonts.scss' as fonts;
+
+@import '../../mixins/_mixins.scss';
+
 .table {
   margin: 0 auto;
   margin-top: 50px;
 
-  &-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  &__row {
+    @include flexCenter;
 
-    &-average {
+    &_average {
       margin-right: 47px;
     }
 
-    &-info {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    &_info {
+      @include flexCenter;
     }
   }
-
-  &-cell {
-    margin: 5px;
-    padding: 5px;
-    width: 50px;
-    height: 35px;
-    font-weight: 800;
-    cursor: pointer;
-    background-color: #60dbfb;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &:hover {
-      color: #fff;
-      background-color: #f87a63;
-    }
-
-    &-remove {
-      border: none;
-      background-color: transparent;
-      cursor: pointer;
-      width: 50px;
-      height: 35px;
-    }
-
-    &-info {
-      margin: 5px;
-      padding: 5px;
-      width: 50px;
-      height: 35px;
-      background-color: #60dbfb;
-      background: #fff;
-      font-weight: 800;
-      color: black;
-      text-align: center;
-      align-items: center;
-      display: flex;
-      justify-content: center;
-    }
-  }
-
-  .average,
-  .sum {
-    background-color: #1aa59f;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 800;
-  }
-}
-
-.delete-row {
-  display: none;
-}
-
-.highlighted {
-  background-color: #f5f827;
-}
-
-.button-addRow {
-  width: 100px;
-  height: 45px;
-  font-size: 16px;
-  background-color: #f5f827;
-  color: black;
-  border: none;
-  font-weight: 800;
-  margin-bottom: 30px;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 }

@@ -1,0 +1,32 @@
+@use '../variables/_colors.scss' as colors;
+@use '../variables/_fonts.scss' as fonts;
+
+@mixin flexCenter {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+@mixin flexSpaceBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin button {
+  margin-top: 50px;
+  font-weight: 800;
+  font-size: fonts.$medium-font;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+@mixin cell {
+  margin: 5px;
+  padding: 5px;
+  width: 50px;
+  height: 35px;
+  font-weight: 800;
+  border-radius: 5px;
+}

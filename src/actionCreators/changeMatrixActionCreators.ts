@@ -1,3 +1,5 @@
+import { IChangeMatrixState } from '../types/changeMatrix';
+
 export const removeRow = (rowId: number) => ({
   type: 'REMOVE_ROW',
   payload: rowId,
@@ -43,4 +45,9 @@ export const removeHighLight = (
 export const showPercents = (percentsArr: number[]) => ({
   type: 'SHOW_PERCENTS',
   payload: percentsArr,
+});
+
+export const fillMatrix = (matrix: IChangeMatrixState) => ({
+  type: 'FILL_MATRIX',
+  payload: matrix,
 });

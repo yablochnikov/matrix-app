@@ -1,3 +1,5 @@
+import uniqid from 'uniqid';
+
 import { IChangeMatrixState } from '../types/changeMatrix';
 
 export const getClosest = (
@@ -44,4 +46,23 @@ export const removeHighLight = ({ numbers }: IChangeMatrixState) => {
     });
   });
   return numbers;
+};
+
+export const fillState = (
+  { numbers }: IChangeMatrixState,
+  rows: number,
+  columns: number,
+): IChangeMatrixState => {
+  for (let i = 0; i < rows; i++) {
+    numbers[i] = [];
+    for (let j = 0; j < columns; j++) {
+      numbers[i][j] = {
+        value: Math.round(Math.random() * (999 - 100) + 100),
+        isHighLighted: false,
+        id: uniqid(),
+      };
+    }
+  }
+
+  return { numbers };
 };

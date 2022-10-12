@@ -1,0 +1,57 @@
+@use '../../variables/_colors.scss' as colors;
+@use '../../variables/_fonts.scss' as fonts;
+
+@import '../../mixins/_mixins.scss';
+
+.cell {
+  background-color: colors.$cell-background-color;
+  @include flexCenter;
+  @include cell;
+  cursor: pointer;
+
+  &:hover {
+    color: #fff;
+    background-color: colors.$cell-bg-hover-color;
+  }
+
+  &__remove {
+    border: none;
+    background-color: transparent;
+    width: 50px;
+    height: 35px;
+    cursor: pointer;
+  }
+
+  &__info {
+    margin: 5px;
+    padding: 5px;
+    width: 50px;
+    height: 35px;
+    background-color: colors.$cell-background-color;
+    background: none;
+    font-weight: 800;
+    color: colors.$additional-text-color;
+    text-align: center;
+    @include flexCenter;
+  }
+  &__highlighted {
+    background-color: colors.$additional-color;
+  }
+
+  &__average {
+    background-color: colors.$main-background-color;
+    color: colors.$main-text-color;
+    font-size: fonts.$small-font;
+    @include flexCenter;
+    @include cell;
+  }
+  &__sum {
+    background-color: colors.$main-background-color;
+    color: colors.$main-text-color;
+    font-size: fonts.$small-font;
+    @include flexCenter;
+    @include cell;
+
+    cursor: default;
+  }
+}
