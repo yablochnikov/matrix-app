@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import classNames from 'classnames';
 
 import { getClosest, removeHighLight } from '../../helpers/helpers';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
@@ -54,10 +55,20 @@ const Row: FC<RowProps> = ({ row, cell }) => {
     (event.target as HTMLElement).removeAttribute('style');
   };
 
+  const condition =
+    (cell.value /
+      row.reduce((acc: number, cell: { value: number }) => {
+        return acc + cell.value;
+      }, 0)) *
+      100 ===
+    cell.percents;
+
   return (
     <div
       key={cell.id}
-      className={cell.isHighLighted ? 'cell cell__highlighted' : 'cell'}
+      className={classNames('cell', {
+        'cell cell__highlighted': cell.isHighLighted,
+      })}
       onClick={() => {
         handleClick(cell.value, cell.id);
       }}
@@ -68,12 +79,7 @@ const Row: FC<RowProps> = ({ row, cell }) => {
         handleLeave(event, numbers);
       }}
       style={
-        (cell.value /
-          row.reduce((acc: number, cell: { value: number }) => {
-            return acc + cell.value;
-          }, 0)) *
-          100 ===
-        cell.percents
+        condition
           ? {
               background: `linear-gradient(0deg, rgba(255,0,0,1) ${cell.percents}%, rgba(255,255,255,1)${cell.percents}%)`,
             }

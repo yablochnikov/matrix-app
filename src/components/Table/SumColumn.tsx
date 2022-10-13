@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import uniqid from 'uniqid';
 
 import { actionCreators } from '../../store/store';
 
