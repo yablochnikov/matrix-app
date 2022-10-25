@@ -1,11 +1,14 @@
 import { FC } from 'react';
 import uniqid from 'uniqid';
 
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { actionCreators } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../hooks/useTypedSelector';
+import { changeMatrixSlice } from '../../store/reducers/changeMatrixSlice';
 
 const AddRowButton: FC = () => {
-  const { columns } = useTypedSelector((state) => state.setMatrix);
+  const dispatch = useAppDispatch();
+  const columns = useAppSelector((state) => state.setMatrixReducer.columns);
+
+  const { addRow } = changeMatrixSlice.actions;
 
   const handleClick = () => {
     const row: {
@@ -20,7 +23,7 @@ const AddRowButton: FC = () => {
         id: uniqid(),
       });
     }
-    actionCreators.addRow(row);
+    dispatch(addRow(row));
   };
 
   return (

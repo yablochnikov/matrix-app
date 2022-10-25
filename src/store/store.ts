@@ -1,23 +1,18 @@
-import { bindActionCreators, combineReducers, legacy_createStore } from 'redux';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import * as changeMatrixActionCreators from '../actionCreators/changeMatrixActionCreators';
-import * as setMatrixActionCreators from '../actionCreators/setMatrixActionCreators';
-import { changeMatrixReducer } from '../reducers/changeMatrixReducer';
-import { setMatrixReducer } from '../reducers/setMatrixReducer';
-
+import changeMatrixReducer from './reducers/changeMatrixSlice';
+import setMatrixReducer from './reducers/setMatrixSlice';
 const rootReducer = combineReducers({
-  changeMatrix: changeMatrixReducer,
-  setMatrix: setMatrixReducer,
+  setMatrixReducer,
+  changeMatrixReducer,
 });
 
-export const store = legacy_createStore(rootReducer);
-
-export const actionCreators = bindActionCreators(
-  {
-    ...changeMatrixActionCreators,
-    ...setMatrixActionCreators,
-  },
-  store.dispatch,
-);
+export const setupStore = () => {
+  return configureStore({
+    reducer: rootReducer,
+  });
+};
 
 export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = ReturnType<typeof setupStore>;
+export type AppDispatch = AppStore['dispatch'];

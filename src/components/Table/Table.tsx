@@ -1,8 +1,8 @@
 import { FC, memo } from 'react';
 import uniqid from 'uniqid';
 
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { actionCreators } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../hooks/useTypedSelector';
+import { changeMatrixSlice } from '../../store/reducers/changeMatrixSlice';
 import { RowType } from '../../types/commonTypes';
 
 import {
@@ -14,16 +14,15 @@ import {
   SumColumn,
 } from './TableElements';
 
-import './Table.scss';
 import './Cell.scss';
+import './Table.scss';
 
 const Table: FC = () => {
-  const { numbers } = useTypedSelector((state) => state.changeMatrix);
-  const { isCreated } = useTypedSelector((state) => state.setMatrix);
+  const dispatch = useAppDispatch();
+  const numbers = useAppSelector((state) => state.changeMatrixReducer.numbers);
+  const isCreated = useAppSelector((state) => state.setMatrixReducer.isCreated);
 
-  const handleClick = (index: number) => {
-    actionCreators.removeRow(index);
-  };
+  const { removeRow } = changeMatrixSlice.actions;
 
   return (
     <div className="table">
@@ -47,7 +46,7 @@ const Table: FC = () => {
                     className="cell__remove"
                     type="button"
                     onClick={() => {
-                      handleClick(index);
+                      dispatch(removeRow(index));
                     }}
                   >
                     x

@@ -1,7 +1,9 @@
 import { FC } from 'react';
 
 import { fillState } from '../../helpers/helpers';
-import { actionCreators } from '../../store/store';
+import { useAppDispatch } from '../../hooks/useTypedSelector';
+import { changeMatrixSlice } from '../../store/reducers/changeMatrixSlice';
+import { setMatrixSlice } from '../../store/reducers/setMatrixSlice';
 
 import './Button.scss';
 
@@ -9,18 +11,16 @@ type ButtonProps = {
   isDisabled: boolean;
   rows: number;
   columns: number;
-  numbers: {
-    value: number;
-    id: string;
-    isHighLighted: boolean;
-    percents?: number | undefined;
-  }[][];
 };
 
-const Button: FC<ButtonProps> = ({ isDisabled, rows, columns, numbers }) => {
-  const handleClick = () => {
-    actionCreators.fillMatrix(fillState({ numbers }, rows, columns));
-    actionCreators.createMatrix();
+const Button: FC<ButtonProps> = ({ isDisabled, rows, columns }) => {
+  const { fillMatrix } = changeMatrixSlice.actions;
+  const { setIsCreated } = setMatrixSlice.actions;
+  const dispatch = useAppDispatch();
+
+  const handleChange = () => {
+    dispatch(fillMatrix(fillState(rows, columns)));
+    dispatch(setIsCreated(true));
   };
 
   return (
@@ -28,7 +28,7 @@ const Button: FC<ButtonProps> = ({ isDisabled, rows, columns, numbers }) => {
       disabled={isDisabled}
       type="button"
       className="button"
-      onClick={() => handleClick()}
+      onClick={() => handleChange()}
     >
       {isDisabled ? 'Choose params please' : 'Create Matrix'}
     </button>

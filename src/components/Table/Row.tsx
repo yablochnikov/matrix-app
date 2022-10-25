@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import classNames from 'classnames';
 
-import { getClosest, removeHighLight } from '../../helpers/helpers';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { actionCreators } from '../../store/store';
+import { getClosest } from '../../helpers/helpers';
+import { useAppDispatch, useAppSelector } from '../../hooks/useTypedSelector';
+import { changeMatrixSlice } from '../../store/reducers/changeMatrixSlice';
 
 type RowProps = {
   row: {
@@ -22,11 +22,15 @@ type RowProps = {
 };
 
 const Row: FC<RowProps> = ({ row, cell }) => {
-  const { numbers } = useTypedSelector((state) => state.changeMatrix);
-  const { cells } = useTypedSelector((state) => state.setMatrix);
+  const dispatch = useAppDispatch();
+  const numbers = useAppSelector((state) => state.changeMatrixReducer.numbers);
+  const cells = useAppSelector((state) => state.setMatrixReducer.cells);
+
+  const { increaseValue, highLightCells, removeHighLight } =
+    changeMatrixSlice.actions;
 
   const handleClick = (value: number, id: string) => {
-    actionCreators.increaseValue(value, id);
+    dispatch(increaseValue(id));
   };
 
   const handleEnter = (
@@ -39,19 +43,11 @@ const Row: FC<RowProps> = ({ row, cell }) => {
       percents?: number | undefined;
     }[][],
   ) => {
-    actionCreators.highLightCells(getClosest(event, cells, { numbers }));
+    dispatch(highLightCells(getClosest(event, cells, { numbers })));
   };
 
-  const handleLeave = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    numbers: {
-      value: number;
-      id: string;
-      isHighLighted: boolean;
-      percents?: number | undefined;
-    }[][],
-  ) => {
-    actionCreators.removeHighLight(removeHighLight({ numbers }));
+  const handleLeave = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    dispatch(removeHighLight());
     (event.target as HTMLElement).removeAttribute('style');
   };
 
@@ -76,7 +72,7 @@ const Row: FC<RowProps> = ({ row, cell }) => {
         handleEnter(event, cells, numbers);
       }}
       onMouseLeave={(event) => {
-        handleLeave(event, numbers);
+        handleLeave(event);
       }}
       style={
         condition

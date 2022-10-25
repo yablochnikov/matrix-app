@@ -11,5 +11,3 @@ export type CellType = {
   isHighLighted: boolean;
   percents?: number;
 };
-
-export type UpdateTypes = 'updateColumns' | 'updateRows' | 'updateCells';

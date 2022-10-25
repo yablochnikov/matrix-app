@@ -9,7 +9,7 @@ export const getClosest = (
 ) => {
   const newArr: number[] = [];
   const amount = Number((element.target as HTMLElement).textContent);
-
+  const res = JSON.parse(JSON.stringify(numbers));
   numbers.forEach((row: { value: number }[]) => {
     row.map((cell: { value: number }) => {
       return newArr.push(cell.value);
@@ -24,45 +24,37 @@ export const getClosest = (
         ? num
         : prevNum;
     });
-
     const s = newArr.findIndex((el) => el === nearest);
+
     newArr.splice(s, 1);
 
-    numbers.forEach((row) => {
-      row.forEach((cell: { value: number; isHighLighted: boolean }) => {
-        if (cell.value === nearest) {
-          cell.isHighLighted = true;
-        }
-      });
-    });
+    res.forEach(
+      (row: Array<{ value: number; isHighLighted: boolean; id: string }>) => {
+        row.forEach((cell) => {
+          if (cell.value === nearest) {
+            cell.isHighLighted = true;
+          }
+        });
+      },
+    );
   }
-  return numbers;
+
+  return res;
 };
 
-export const removeHighLight = ({ numbers }: IChangeMatrixState) => {
-  numbers.forEach((row) => {
-    row.map((cell: { isHighLighted: boolean }) => {
-      cell.isHighLighted = false;
-    });
-  });
-  return numbers;
-};
-
-export const fillState = (
-  { numbers }: IChangeMatrixState,
-  rows: number,
-  columns: number,
-): IChangeMatrixState => {
+export const fillState = (rows: number, columns: number) => {
+  const newArr: Array<
+    Array<{ value: number; isHighLighted: boolean; id: string }>
+  > = [];
   for (let i = 0; i < rows; i++) {
-    numbers[i] = [];
+    newArr[i] = [];
     for (let j = 0; j < columns; j++) {
-      numbers[i][j] = {
+      newArr[i][j] = {
         value: Math.round(Math.random() * (999 - 100) + 100),
         isHighLighted: false,
         id: uniqid(),
       };
     }
   }
-
-  return { numbers };
+  return newArr;
 };

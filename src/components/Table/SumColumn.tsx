@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
-import { actionCreators } from '../../store/store';
+import { useAppDispatch } from '../../hooks/useTypedSelector';
+import { changeMatrixSlice } from '../../store/reducers/changeMatrixSlice';
 
 interface SumColumnProps {
   row: {
@@ -12,16 +13,18 @@ interface SumColumnProps {
 }
 
 const SumColumn: FC<SumColumnProps> = ({ row }) => {
+  const dispatch = useAppDispatch();
+
+  const { setPercents, clearPercents } = changeMatrixSlice.actions;
+
   return (
     <span
       className="cell cell__sum"
       onMouseOver={(e) => {
-        actionCreators.setPercents(
-          Number((e.target as HTMLElement).textContent),
-        );
+        dispatch(setPercents(Number((e.target as HTMLElement).textContent)));
       }}
       onMouseLeave={() => {
-        actionCreators.clearPercents();
+        dispatch(clearPercents(null));
       }}
     >
       {row.reduce((acc: number, cell: { value: number }) => {

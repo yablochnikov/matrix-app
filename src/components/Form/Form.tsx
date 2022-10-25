@@ -1,29 +1,21 @@
-import { ChangeEvent, FC } from 'react';
+import { FC } from 'react';
 
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { actionCreators } from '../../store/store';
-import { UpdateTypes } from '../../types/commonTypes';
+import { useAppDispatch, useAppSelector } from '../../hooks/useTypedSelector';
+import { setMatrixSlice } from '../../store/reducers/setMatrixSlice';
 import Button from '../Button/Button';
 
 import './Form.scss';
 
 const Form: FC = () => {
-  const { isCreated } = useTypedSelector((state) => state.setMatrix);
-  const { numbers } = useTypedSelector((state) => state.changeMatrix);
-  const { rows, columns, cells } = useTypedSelector((state) => state.setMatrix);
+  const { isCreated, rows, columns, cells } = useAppSelector(
+    (state) => state.setMatrixReducer,
+  );
+
+  const { setRows, setColumns, setCells } = setMatrixSlice.actions;
+
+  const dispatch = useAppDispatch();
 
   const isDisabled = rows > 0 && columns > 0 && cells > 0 ? false : true;
-  const updateColumns = 'updateColumns',
-    updateRows = 'updateRows',
-    updateCells = 'updateCells';
-
-  const handleChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    actionType: UpdateTypes,
-  ): void => {
-    actionCreators[actionType](Number(event.target.value));
-  };
-
   return (
     <>
       {!isCreated ? (
@@ -37,7 +29,7 @@ const Form: FC = () => {
                 type="number"
                 min="0"
                 onChange={(e) => {
-                  handleChange(e, updateColumns);
+                  dispatch(setColumns(Number(e.target.value)));
                 }}
               />
             </div>
@@ -45,7 +37,7 @@ const Form: FC = () => {
             <div className="form__select">
               <label htmlFor="rows">Enter the number of rows :</label>
               <input
-                onChange={(e) => handleChange(e, updateRows)}
+                onChange={(e) => dispatch(setRows(Number(e.target.value)))}
                 className="form__input"
                 name="rows"
                 id="rows"
@@ -61,17 +53,12 @@ const Form: FC = () => {
                 name="cells"
                 type="number"
                 min="0"
-                onChange={(e) => handleChange(e, updateCells)}
+                onChange={(e) => dispatch(setCells(Number(e.target.value)))}
               />
             </div>
           </div>
 
-          <Button
-            isDisabled={isDisabled}
-            rows={rows}
-            columns={columns}
-            numbers={numbers}
-          />
+          <Button isDisabled={isDisabled} rows={rows} columns={columns} />
         </form>
       ) : (
         <h2 className="form__subheader">Enjoy</h2>

@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import uniqid from 'uniqid';
 
-import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { useAppSelector } from '../../hooks/useTypedSelector';
 
 const ColumnNumberRow: FC = () => {
-  const { numbers } = useTypedSelector((state) => state.changeMatrix);
+  const numbers = useAppSelector((state) => state.changeMatrixReducer.numbers);
 
   return (
     <div className="table__row table__row_average">
