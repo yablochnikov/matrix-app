@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import classNames from 'classnames';
+import uniqid from 'uniqid';
 
 import { getClosest } from '../../helpers/helpers';
 import { useAppDispatch, useAppSelector } from '../../hooks/useTypedSelector';
@@ -61,7 +62,6 @@ const Row: FC<RowProps> = ({ row, cell }) => {
 
   return (
     <div
-      key={cell.id}
       className={classNames('cell', {
         'cell cell__highlighted': cell.isHighLighted,
       })}

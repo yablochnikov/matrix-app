@@ -32,27 +32,25 @@ const Table: FC = () => {
           <ColumnNumberRow />
           {numbers.map((row: RowType, index: number) => {
             return (
-              <>
-                <div className="table__row">
-                  <span key={uniqid()} className="cell__info">
-                    {index + 1}
-                  </span>
-                  {row.map((cell) => {
-                    return <Row cell={cell} row={row} key={cell.id} />; // ?????
-                  })}
-                  <SumColumn row={row} />
-                  <button
-                    key={uniqid()}
-                    className="cell__remove"
-                    type="button"
-                    onClick={() => {
-                      dispatch(removeRow(index));
-                    }}
-                  >
-                    x
-                  </button>
-                </div>
-              </>
+              <div className="table__row" key={index}>
+                <span key={uniqid()} className="cell__info">
+                  {index + 1}
+                </span>
+                {row.map((cell) => {
+                  return <Row cell={cell} row={row} key={cell.id} />;
+                })}
+                <SumColumn row={row} key={uniqid()} />
+                <button
+                  key={uniqid()}
+                  className="cell__remove"
+                  type="button"
+                  onClick={() => {
+                    dispatch(removeRow(index));
+                  }}
+                >
+                  x
+                </button>
+              </div>
             );
           })}
           <div className="table__row table__row_average">

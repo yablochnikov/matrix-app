@@ -10,6 +10,7 @@ export const getClosest = (
   const newArr: number[] = [];
   const amount = Number((element.target as HTMLElement).textContent);
   const res = JSON.parse(JSON.stringify(numbers));
+
   numbers.forEach((row: { value: number }[]) => {
     row.map((cell: { value: number }) => {
       return newArr.push(cell.value);
