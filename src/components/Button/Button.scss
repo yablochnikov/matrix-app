@@ -1,20 +1,31 @@
+@use '../../variables/_colors.scss' as colors;
+@use '../../variables/_fonts.scss' as fonts;
+
+@import '../../mixins/_mixins.scss';
+
 .button {
-  margin-top: 50px;
   width: 150px;
   height: 50px;
-  font-weight: 800;
-  font-size: 16px;
-  background-color: aqua;
-  color: red;
-  border: none;
-  border-radius: 5px;
-  box-shadow: inset 3px 3px 3px rgba($color: #fff, $alpha: 0.3);
-  cursor: pointer;
+  font-size: fonts.$medium-font;
+  background-color: colors.$create-matrix-button-color;
+  color: colors.$create-matrix-button-text;
+  box-shadow: inset 3px 3px 3px rgba($color: colors.$shadow-color, $alpha: 0.3);
+  @include button;
 
   &:disabled {
-    border: 1px solid #999999;
-    background-color: #cccccc;
-    color: #666666;
+    border: 1px solid colors.$disabled-button-border;
+    background-color: colors.$disabled-button-bg;
+    color: colors.$disabled-button-text;
     cursor: not-allowed;
+  }
+  &__add {
+    width: 100px;
+    height: 45px;
+    background-color: colors.$additional-color;
+    color: colors.$additional-text-color;
+    margin-bottom: 30px;
+    box-shadow: 0px 8px 15px colors.$shadow-color;
+
+    @include button;
   }
 }
