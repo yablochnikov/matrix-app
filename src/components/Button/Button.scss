@@ -1,10 +1,20 @@
 .button {
   margin-top: 50px;
-  width: 90px;
-  height: 30px;
+  width: 150px;
+  height: 50px;
+  font-weight: 800;
+  font-size: 16px;
   background-color: aqua;
   color: red;
   border: none;
   border-radius: 5px;
+  box-shadow: inset 3px 3px 3px rgba($color: #fff, $alpha: 0.3);
   cursor: pointer;
+
+  &:disabled {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+  }
 }
